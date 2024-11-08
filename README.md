@@ -15,3 +15,4 @@ requirements
 step:
 1. init bucket first
 2. implement backend following huawei document
+3. Be prepare for disaster discovery, because this approach is original by me
