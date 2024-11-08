@@ -22,6 +22,14 @@ module "network_test" {
         Environment = "default"
         Version     = "1.0.0"
       }
+    },
+    {
+      vpc_name = "add-on"
+      vpc_cidr = "10.3.0.0/16"
+      tags = {
+        Environment = "add-on"
+        Version     = "1.0.0"
+      }
     }
   ]
 }
