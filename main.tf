@@ -3,10 +3,25 @@ resource "huaweicloud_obs_bucket" "bucket" {
   storage_class = "STANDARD"
   acl           = "private"
   encryption    = true
-  versioning = true
-  
+  versioning    = true
+
   tags = {
     Environment = "master"
-    Version = "1.0.0"
+    Version     = "1.0.0"
   }
+}
+
+module "network_test" {
+  source = "./modules/network/"
+
+  vpc = [
+    {
+      vpc_name = "default"
+      vpc_cidr = "10.2.0.0/16"
+      tags = {
+        Environment = "default"
+        Version     = "1.0.0"
+      }
+    }
+  ]
 }
