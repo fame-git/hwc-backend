@@ -9,27 +9,31 @@ resource "huaweicloud_obs_bucket" "bucket" {
     Environment = "master"
     Version     = "1.0.0"
   }
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
-module "network_test" {
-  source = "./modules/network/"
+module "lts_test_bundle" {
+  source = "./modules/lts/"
 
-  vpc = [
+  lts = [
     {
-      vpc_name = "default"
-      vpc_cidr = "10.2.0.0/16"
-      tags = {
-        Environment = "default"
-        Version     = "1.0.0"
-      }
+      lts_group_name = "test-group-1"
+      lts_ttl_in_days = 90
+      streams = [
+        {
+          lts_stream_name = "test-group-1-stream"
+        },
+        {
+          lts_stream_name = "test-group-2-stream"
+        }
+      ]
     },
     {
-      vpc_name = "add-on"
-      vpc_cidr = "10.3.0.0/16"
-      tags = {
-        Environment = "add-on"
-        Version     = "1.0.0"
-      }
+      lts_group_name = "test-group-2"
+      lts_ttl_in_days = 90
     }
   ]
 }
