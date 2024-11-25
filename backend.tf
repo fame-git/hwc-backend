@@ -14,3 +14,9 @@ terraform {
     skip_s3_checksum            = true
   }
 }
+
+# terraform {
+#   backend "local" {
+#     path = "./local-state/master/terraform.tfstate"
+#   }
+# }
