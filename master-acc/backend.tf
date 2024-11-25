@@ -17,6 +17,6 @@ terraform {
 
 # terraform {
 #   backend "local" {
-#     path = "./local-state/master/terraform.tfstate"
+#     path = "../local-state/master/terraform.tfstate"
 #   }
 # }

@@ -21,7 +21,7 @@ module "network_test" {
 
   vpc = [
     {
-      vpc_name = "default"
+      vpc_name = "default-222222"
       vpc_cidr = "10.2.0.0/16"
       tags = {
         Environment = "default"
