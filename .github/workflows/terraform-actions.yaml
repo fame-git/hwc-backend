@@ -1,56 +1,43 @@
-name: Terraform Action
+name: Terraform GitOps Workflow
 
 on:
+  pull_request:
+    branches:
+      - main
   push:
     branches:
       - main
-    paths:
-      - 'master-acc/**'
-      - 'network-acc/**'
-      - '.github/workflows/**'
-  
-  workflow_dispatch: 
 
 jobs:
-  build:
-    runs-on: ubuntu-22.04
+  terraform:
+    name: Terraform Plan and Apply
+    runs-on: ubuntu-latest
 
-    env: # Define environment variables using GitHub Secrets
-      HW_REGION_NAME: ${{ vars.REGION }}
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.HW_ACCESS_KEY }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.HW_SECRET_KEY }}
       HW_ACCESS_KEY: ${{ secrets.HW_ACCESS_KEY }}
       HW_SECRET_KEY: ${{ secrets.HW_SECRET_KEY }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.HW_ACCESS_KEY}}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AHW_SECRET_KEY }}
+
 
     steps:
-      - uses: actions/checkout@v4
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - uses: hashicorp/setup-terraform@v2
+      # Setup Terraform
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 1.5.5
-          terraform_wrapper: false
+          terraform_version: 1.6.0
 
-      - name: Terraform Apply for Each Folder
+      # Initialize Terraform
+      - name: Terraform Init
         run: |
-          for dir in master network; do
-            echo "Processing folder: $dir"
-            cd ${dir}-acc
-            terraform init \
-              -backend-config="access_key=${HW_ACCESS_KEY}" \
-              -backend-config="secret_key=${HW_SECRET_KEY}" \
-              -backend-config="region=${HW_REGION_NAME}" \
-              -backend-config="bucket=terraform-state-bucket" \
-              -backend-config="key=$dir/terraform.tfstate" \
-              -backend-config="endpoint=https://obs.ap-southeast-2.myhuaweicloud.com"
-            terraform apply -auto-approve
-            cd ..
-          done
-        env: # Define environment variables using GitHub Secrets
-          HW_REGION_NAME: ${{ vars.REGION }}
-          HW_ACCESS_KEY: ${{ secrets.HW_ACCESS_KEY }}
-          HW_SECRET_KEY: ${{ secrets.HW_SECRET_KEY }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.HW_ACCESS_KEY}}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AHW_SECRET_KEY }}
+          cd /master-acc
+          terraform init
+          terraform apply -auto-approve
+
       
       
 
