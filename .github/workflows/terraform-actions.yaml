@@ -1,4 +1,4 @@
-name: Terraform GitOps Workflow
+name: HWC-GitOps
 
 on:
   pull_request:
@@ -7,12 +7,11 @@ on:
   push:
     branches:
       - main
-  
   workflow_dispatch:
 
 jobs:
   terraform:
-    name: Terraform Plan and Apply
+    name: Terraform GitOps Workflow
     runs-on: ubuntu-latest
 
     env:
@@ -22,20 +21,33 @@ jobs:
       HW_SECRET_KEY: ${{ secrets.HW_SECRET_KEY }}
       HW_REGION_NAME: ${{ vars.HW_REGION_NAME }}
 
-
     steps:
       # Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Setup Terraform
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
+      # Cache Terraform binary
+      - name: Cache Terraform
+        uses: actions/cache@v3
         with:
-          terraform_version: 1.6.0
+          path: ~/.terraform
+          key: terraform-${{ runner.os }}-v1
+          restore-keys: |
+            terraform-${{ runner.os }}-v1
 
-      # Initialize Terraform
-      - name: Terraform Yum
+      # Install Terraform if cache miss
+      - name: Install Terraform
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y gnupg software-properties-common curl
+          curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+          sudo apt-add-repository "deb https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+          sudo apt-get update -y
+          sudo apt-get install -y terraform
+
+      # Initialize Terraform and apply
+      - name: Terraform Init and Apply
         run: |
           cd network-acc/
           terraform init
