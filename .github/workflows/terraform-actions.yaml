@@ -23,7 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: hashicorp/setup-terraform@3
+      - uses: hashicorp/setup-terraform@3
         with:
           terraform_version: 1.5.5
           terraform_wrapper: false
