@@ -37,22 +37,9 @@ jobs:
       # Initialize Terraform
       - name: Terraform Yum
         run: |
-          cd master-acc/
-          terraform init \
-            -backend-config="bucket=terraform-state-bucket" \
-            -backend-config="key=master/terraform.tfstate" \
-            -backend-config="region=$HW_REGION_NAME" \
-            -backend-config="endpoint=https://obs.ap-southeast-2.myhuaweicloud.com" \
-            -backend-config="access_key=$HW_ACCESS_KEY" \
-            -backend-config="secret_key=$HW_SECRET_KEY" \
-            -backend-config="skip_region_validation=true" \
-            -backend-config="skip_credentials_validation=true" \
-            -backend-config="skip_metadata_api_check=true" \
-            -backend-config="skip_requesting_account_id=true" \
-            -backend-config="skip_s3_checksum=true"
-          terraform apply -auto-approve \
-            -var="access_key=$HW_ACCESS_KEY" \
-            -var="secret_key=$HW_SECRET_KEY"
+          cd network-acc/
+          terraform init
+          terraform apply -auto-approve
 
 
 
