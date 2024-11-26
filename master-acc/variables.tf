@@ -1,3 +1,9 @@
+######################################################################
+# Access Key and Secret Key
+######################################################################
+variable "access_key" { type = string }
+variable "secret_key" { type = string }
+
 # variable "obs" {
 #   type = list(object({
 #     bucket                = string # Required: Name of the OBS bucket
