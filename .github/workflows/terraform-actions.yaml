@@ -32,10 +32,16 @@ jobs:
 
       - name: Terraform Apply for Each Folder
         run: |
-          for dir in master-acc network-acc; do
+          for dir in master network; do
             echo "Processing folder: $dir"
-            cd $dir
-            terraform init -migrate-state
+            cd ${dir}-acc
+            terraform init \
+              -backend-config="access_key=${HW_ACCESS_KEY}" \
+              -backend-config="secret_key=${HW_SECRET_KEY}" \
+              -backend-config="region=${HW_REGION_NAME}" \
+              -backend-config="bucket=terraform-state-bucket" \
+              -backend-config="key=$dir/terraform.tfstate" \
+              -backend-config="endpoint=https://obs.ap-southeast-2.myhuaweicloud.com"
             terraform apply -auto-approve
             cd ..
           done

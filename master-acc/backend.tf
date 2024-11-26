@@ -1,11 +1,11 @@
 terraform {
   backend "s3" {
-    bucket = "terraform-state-bucket"
-    key    = "master/terraform.tfstate"
-    region = "ap-southeast-2"
-    endpoints = {
-      s3 = "https://obs.ap-southeast-2.myhuaweicloud.com"
-    }
+    # bucket = "terraform-state-bucket"
+    # key    = "master/terraform.tfstate"
+    # region = "ap-southeast-2"
+    # endpoints = {
+    #   s3 = "https://obs.ap-southeast-2.myhuaweicloud.com"
+    # }
 
     skip_region_validation      = true
     skip_credentials_validation = true
