@@ -28,11 +28,18 @@ jobs:
           terraform_version: 1.5.5
           terraform_wrapper: false
 
-      - name: Terraform Apply
-        runs: |
-          terraform init
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt -check
+        continue-on-error: true
 
-          terraform apply -auto-approve
+      - name: Terraform Init
+        id: init
+        run: terraform init
+      
+      - name: Terraform Apply
+        id: apply
+        run: terraform apply -auto-approve
       
       
 
