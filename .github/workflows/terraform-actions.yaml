@@ -30,15 +30,15 @@ jobs:
           terraform_version: 1.5.5
           terraform_wrapper: false
 
-        - name: Terraform Apply for Each Folder
-          run: |
-            for dir in master-acc network-acc; do
-              echo "Processing folder: $dir"
-              cd $dir
-              terraform init
-              terraform apply -auto-approve
-              cd ..
-            done
+      - name: Terraform Apply for Each Folder
+        run: |
+          for dir in master-acc network-acc; do
+            echo "Processing folder: $dir"
+            cd $dir
+            terraform init
+            terraform apply -auto-approve
+            cd ..
+          done
       
       
 
