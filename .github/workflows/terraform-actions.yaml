@@ -18,6 +18,7 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.HW_SECRET_KEY }}
       HW_ACCESS_KEY: ${{ secrets.HW_ACCESS_KEY }}
       HW_SECRET_KEY: ${{ secrets.HW_SECRET_KEY }}
+      HW_REGION_NAME: ${{ vars.HW_REGION_NAME }}
 
 
     steps:
@@ -38,7 +39,7 @@ jobs:
           terraform init \
             -backend-config="bucket=terraform-state-bucket" \
             -backend-config="key=master/terraform.tfstate" \
-            -backend-config="region=ap-southeast-2" \
+            -backend-config="region=$HW_REGION_NAME" \
             -backend-config="endpoint=https://obs.ap-southeast-2.myhuaweicloud.com" \
             -backend-config="access_key=$HW_ACCESS_KEY" \
             -backend-config="secret_key=$HW_SECRET_KEY" \
