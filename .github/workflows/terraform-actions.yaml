@@ -8,6 +8,8 @@ on:
       - 'master-acc/**'
       - 'network-acc/**'
       - '.github/workflows/**'
+  
+  workflow_dispatch: 
 
 jobs:
   build:
