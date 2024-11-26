@@ -32,9 +32,9 @@ jobs:
           terraform_version: 1.6.0
 
       # Initialize Terraform
-      - name: Terraform Init
+      - name: Terraform Yum
         run: |
-          cd /master-acc
+          cd master-acc/
           terraform init
           terraform apply -auto-approve
 
