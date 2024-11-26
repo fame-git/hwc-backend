@@ -50,7 +50,6 @@ jobs:
       - name: Terraform Init and Apply
         run: |
           cd network-acc/
-          terraform init
           terraform apply -auto-approve
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.HW_ACCESS_KEY }}
