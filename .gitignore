@@ -1,7 +1,9 @@
 /.secret/*
 /.terraform/*
-/master-acc/.terraform/*
 
 /network-acc/.terraform/*
+/master-acc/.terraform/*
+
+
 *.lock.hcl
 *.tfstate*
