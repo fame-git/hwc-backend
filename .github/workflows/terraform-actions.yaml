@@ -49,11 +49,6 @@ jobs:
       # Initialize Terraform and apply
       - name: Terraform Init and Apply
         run: |
-          export HW_ACCESS_KEY=$HW_ACCESS_KEY
-          export HW_SECRET_KEY=$HW_SECRET_KEY
-          export HW_REGION_NAME="ap-southeast-2"
-          export AWS_ACCESS_KEY_ID=$HW_ACCESS_KEY
-          export AWS_SECRET_ACCESS_KEY=$HW_SECRET_KEY
           cd network-acc/
           terraform init -migrate-state
           terraform apply -auto-approve
