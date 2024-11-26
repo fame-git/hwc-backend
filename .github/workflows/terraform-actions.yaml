@@ -35,7 +35,6 @@ jobs:
           for dir in master-acc network-acc; do
             echo "Processing folder: $dir"
             cd $dir
-            terraform init
             terraform apply -auto-approve
             cd ..
           done
