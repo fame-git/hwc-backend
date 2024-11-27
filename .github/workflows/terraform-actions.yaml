@@ -55,7 +55,9 @@ jobs:
       # Initialize Terraform and apply
       - name: Terraform Init and Apply
         run: |
+          ls -alh
           cd network-acc/
+          ls -alh
           terraform init
           terraform apply -auto-approve
         env:
