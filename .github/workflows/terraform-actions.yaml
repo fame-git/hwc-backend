@@ -42,24 +42,20 @@ jobs:
             terraform-${{ runner.os }}-v1
 
       # Install Terraform if cache miss
-      - name: Install Terraform
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: |
-          sudo apt-get update -y
-          sudo apt-get install -y gnupg software-properties-common curl
-          curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
-          sudo apt-add-repository "deb https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-          sudo apt-get update -y
-          sudo apt-get install -y terraform
+      # - name: Install Terraform
+      #   if: steps.cache.outputs.cache-hit != 'true'
+      #   run: |
+      #     sudo apt-get update -y
+      #     sudo apt-get install -y gnupg software-properties-common curl
+      #     curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+      #     sudo apt-add-repository "deb https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+      #     sudo apt-get update -y
+      #     sudo apt-get install -y terraform
 
       # Initialize Terraform and apply
       - name: Terraform Init and Apply
         run: |
           ls -alh
-          cd network-acc/
-          ls -alh
-          terraform init
-          terraform apply -auto-approve
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.HW_ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.HW_SECRET_KEY }}
